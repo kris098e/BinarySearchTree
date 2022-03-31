@@ -15,10 +15,11 @@ public class Tester {
         
         try {
             Files.walk( Paths.get(path))
-                .filter( Files::isRegularFile)
+                .filter(Files::isRegularFile)
                 .map( pat -> new Thread( () -> {
+                    Dict temp = checker(pat);
                     synchronized(holder) {
-                        holder.add(checker(pat));
+                        holder.add(temp);
                     }
                 }))
                 .forEach(t -> list.add(t));
@@ -32,13 +33,13 @@ public class Tester {
         } catch(InterruptedException e) {
             e.printStackTrace();
         }
+
         holder.forEach(temp-> System.out.println(temp.orderedTraversal()));
     }
     private static Dict checker(Path path) {
-        List<String> list = new ArrayList<>();
         Dict tree = new DictBinTree();
         try {
-            list = Files.readAllLines(path);
+            List<String> list = Files.readAllLines(path);
             list.forEach( s -> tree.insert(Integer.parseInt(s)));
         } catch (IOException e) {
             e.printStackTrace();;
@@ -46,7 +47,7 @@ public class Tester {
         return tree;
     }
     public static void main(String[] args) {
-        test("C:\\Users\\Krell\\Dropbox\\Pc\\Documents\\2. semester\\Dictionary_AlgoDat\\Data");
+        test("C:\\Users\\Krell\\Dropbox\\Pc\\Documents\\2. semester\\BinarySearchTree\\Data");
 
     }
 }
