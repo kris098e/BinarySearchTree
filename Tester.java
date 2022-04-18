@@ -42,7 +42,7 @@ public class Tester {
             List<String> list = Files.readAllLines(path);
             list.forEach( s -> tree.insert(Integer.parseInt(s)));
         } catch (IOException e) {
-            e.printStackTrace();;
+            e.printStackTrace();
         }
         return tree;
     }
